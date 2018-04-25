@@ -20,8 +20,14 @@ io.on('connection', (socket) => {
 		createdAt: new Date(1524624600 * 1000).toDateString()
 	});
 
-	socket.on('createEmail', (newEmail) => {
-		console.log('Create Email', newEmail)
+	socket.on('createMessage', (message) => {
+		console.log('Create Message', message)
+	});
+
+	socket.emit('newMessage', {
+		to: 'client@owllog',
+		message: 'are it arrived',
+		createdAt: new Date(1524624600 * 1000).toDateString()
 	});
 
 	socket.on('disconnect', () => {
