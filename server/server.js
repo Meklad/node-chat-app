@@ -14,20 +14,14 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
 	console.log('New User Connected...');
 
-	socket.emit('newEmail', {
-		from: 'support@owllog.ml',
-		message: 'Hello, This is my message...',
-		createdAt: new Date(1524624600 * 1000).toDateString()
-	});
-
 	socket.on('createMessage', (message) => {
-		console.log('Create Message', message)
-	});
+		console.log('Message Created', message);
 
-	socket.emit('newMessage', {
-		to: 'client@owllog',
-		message: 'are it arrived',
-		createdAt: new Date(1524624600 * 1000).toDateString()
+		io.emit('newMessage', {
+			from: message.from,
+			message: message.message,
+			createdAt: new Date().getTime()
+		});
 	});
 
 	socket.on('disconnect', () => {
